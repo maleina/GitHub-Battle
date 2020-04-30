@@ -34,6 +34,7 @@ export default class Popular extends React.Component {
       selectedLanguage
     })
   }
+
   render() {
     const { selectedLanguage } = this.state
 

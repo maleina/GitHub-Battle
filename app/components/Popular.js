@@ -35,7 +35,7 @@ function ReposGrid ({ repos }) {
         const { login, avatar_url } = owner
 
         return (
-          <li key={html_url} className='repo bg-light'>
+          <li key={html_url} className='card bg-light'>
             <h4 className='header-lg center-text'>
               #{index + 1}
             </h4>
@@ -85,28 +85,25 @@ export default class Popular extends React.Component {
     this.state = {
       selectedLanguage: 'All',
       repos: {},
-      error: null
+      error: null,
     }
 
     this.updateLanguage = this.updateLanguage.bind(this)
     this.isLoading = this.isLoading.bind(this)
   }
-
-  componentDidMount() {
+  componentDidMount () {
     this.updateLanguage(this.state.selectedLanguage)
   }
-
-
-  updateLanguage(selectedLanguage) {
+  updateLanguage (selectedLanguage) {
     this.setState({
       selectedLanguage,
-      error: null
+      error: null,
     })
 
     if (!this.state.repos[selectedLanguage]) {
       fetchPopularRepos(selectedLanguage)
         .then((data) => {
-          this.setState(({repos}) => ({
+          this.setState(({ repos }) => ({
             repos: {
               ...repos,
               [selectedLanguage]: data
@@ -122,13 +119,11 @@ export default class Popular extends React.Component {
         })
     }
   }
-
   isLoading() {
     const { selectedLanguage, repos, error } = this.state
 
     return !repos[selectedLanguage] && error === null
   }
-
   render() {
     const { selectedLanguage, repos, error } = this.state
 
@@ -141,9 +136,9 @@ export default class Popular extends React.Component {
 
         {this.isLoading() && <p>LOADING</p>}
 
-        {error && <p>{error}</p>}
+        {error && <p className='center-text error'>{error}</p>}
 
-        {repos[selectedLanguage] && <ReposGrid repos = {repos[selectedLanguage]} />}
+        {repos[selectedLanguage] && <ReposGrid repos={repos[selectedLanguage]} />}
       </React.Fragment>
     )
   }
